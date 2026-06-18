@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConfigSync – Distributed Configuration Management Service</title>
+    
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Dashboard Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="logo-icon"></div>
+                <h1>ConfigSync</h1>
+                <span class="badge badge-system">Distributed</span>
+            </div>
+            
+            <div class="header-status">
+                <div class="status-item">
+                    <span class="status-label">Consensus State:</span>
+                    <span id="consensusStatus" class="status-value text-success">Healthy</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Active Leader:</span>
+                    <span id="activeLeaderHeader" class="status-value text-cyan">None</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">Global Revision:</span>
+                    <span id="globalRevisionHeader" class="status-value text-indigo">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid Layout -->
+        <main class="dashboard-grid">
+            
+            <!-- STATS SECTION -->
+            <section class="stats-row col-span-12">
+                <div class="stat-card">
+                    <div class="stat-icon icon-configs"></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Configurations</span>
+                        <h2 id="statTotalConfigs">0</h2>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon icon-services"></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Connected Services</span>
+                        <h2 id="statConnectedServices">0/3</h2>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon icon-term"></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Current Consensus Term</span>
+                        <h2 id="statCurrentTerm">0</h2>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon icon-revision"></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Database Logs Commit</span>
+                        <h2 id="statCommitLogs">0</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MIDDLE SECTION: Service Control + Forms & Logs -->
+            
+            <!-- Left Panel: Services & Forms -->
+            <div class="panel-column col-span-5">
+                
+                <!-- Services Status Card -->
+                <section class="panel-card">
+                    <div class="panel-header">
+                        <h3>Service Control Center</h3>
+                        <span class="panel-desc">Crash/Restore nodes to test leader re-election</span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="servicesList" class="services-list">
+                            <!-- Populated dynamically by JS -->
+                            <div class="service-skeleton">Loading services...</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Create Config Card -->
+                <section class="panel-card">
+                    <div class="panel-header">
+                        <h3>Create Configuration</h3>
+                        <span class="panel-desc">Add a key-value pair to the distributed store</span>
+                    </div>
+                    <div class="panel-body">
+                        <form id="createConfigForm" class="config-form">
+                            <div class="form-group">
+                                <label for="createKey">Configuration Key</label>
+                                <input type="text" id="createKey" placeholder="e.g. database_url" required autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="createValue">Configuration Value</label>
+                                <textarea id="createValue" rows="2" placeholder="e.g. postgres://db.local:5432" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="createDescription">Description</label>
+                                <input type="text" id="createDescription" placeholder="Database endpoint connection URL" autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <span class="btn-text">Propose & Propagate</span>
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+            
+            <!-- Right Panel: Live Logs Console -->
+            <section class="panel-card col-span-7 log-console-card">
+                <div class="panel-header log-header">
+                    <div class="header-title-group">
+                        <h3>Live Distributed Sync Logs</h3>
+                        <span class="panel-desc">Real-time Raft events, heartbeat logs, & replication commits</span>
+                    </div>
+                    <button id="clearLogsBtn" class="btn btn-sm btn-outline">Clear Logs</button>
+                </div>
+                <div class="panel-body log-body">
+                    <div id="logConsole" class="log-console">
+                        <!-- Streamed dynamically by SSE /watch -->
+                        <div class="log-line system-log">
+                            <span class="log-time">[SYSTEM]</span>
+                            <span class="log-msg">Connecting to EventSource stream at /watch...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BOTTOM SECTION: Configuration Store & Rollback -->
+            
+            <!-- Configurations Table Card -->
+            <section class="panel-card col-span-12">
+                <div class="panel-header table-header">
+                    <div>
+                        <h3>Distributed Config Store</h3>
+                        <span class="panel-desc">Consistent configurations committed across the quorum</span>
+                    </div>
+                    <div class="header-actions">
+                        <!-- Rollback form -->
+                        <div class="rollback-control">
+                            <label for="rollbackRevision">Point-in-Time Rollback:</label>
+                            <input type="number" id="rollbackRevision" min="1" placeholder="Revision ID" required>
+                            <button id="rollbackBtn" class="btn btn-danger btn-sm">Rollback</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body table-body">
+                    <div class="table-responsive">
+                        <table class="config-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                    <th>Description</th>
+                                    <th>Version</th>
+                                    <th>Last Updated</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="configTableBody">
+                                <!-- Populated dynamically by JS -->
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">No configurations found. Add one above.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+        
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>ConfigSync &copy; 2026 – Distributed Configuration Management Service. Final Year B.Tech System Design Project Demonstration.</p>
+        </footer>
+    </div>
+
+    <!-- UPDATE CONFIG MODAL DIALOG (Native dialog with closedby="any" for light dismiss) -->
+    <dialog id="editDialog" closedby="any" aria-labelledby="dialogTitle">
+        <form method="dialog" class="dialog-form">
+            <div class="dialog-header">
+                <h3 id="dialogTitle">Update Configuration</h3>
+                <button type="button" class="btn-close" onclick="document.getElementById('editDialog').close()">&times;</button>
+            </div>
+            <div class="dialog-body">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label for="editKey">Key (Read Only)</label>
+                    <input type="text" id="editKey" readonly class="input-readonly">
+                </div>
+                <div class="form-group">
+                    <label for="editValue">Configuration Value</label>
+                    <textarea id="editValue" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <input type="text" id="editDescription" placeholder="Description of this config">
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button type="button" class="btn btn-outline" onclick="document.getElementById('editDialog').close()">Cancel</button>
+                <button type="submit" id="saveEditBtn" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </dialog>
+
+    <!-- JS scripts -->
+    <script src="/static/script.js"></script>
+</body>
+</html>

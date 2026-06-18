@@ -1,0 +1,69 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="AmIt5_xmSq19LA93sTul">
+    <mxGraphModel dx="956" dy="671" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="WIukMI8lCswDVTCZhfXU-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" value="Admin Dashboard" vertex="1">
+          <mxGeometry height="60" width="140" x="200" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-2" parent="1" style="swimlane;startSize=30;fillColor=#f5f5f5;strokeColor=#ccc;html=1;fontStyle=1;align=center;" value="Flask API Layer" vertex="1">
+          <mxGeometry height="120" width="500" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-3" parent="WIukMI8lCswDVTCZhfXU-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Config Store" vertex="1">
+          <mxGeometry height="60" width="130" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-4" parent="WIukMI8lCswDVTCZhfXU-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;arcSize=18;" value="Watcher Service" vertex="1">
+          <mxGeometry height="60" width="130" x="185" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-5" parent="WIukMI8lCswDVTCZhfXU-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Monitoring Engine" vertex="1">
+          <mxGeometry height="60" width="130" x="350" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-6" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#b85450;fontStyle=1;" value="SQLite Database" vertex="1">
+          <mxGeometry height="80" width="120" x="210" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-7" parent="1" style="swimlane;startSize=30;fillColor=#e8f5e9;strokeColor=#81c784;html=1;fontStyle=1;align=center;" value="Distributed Node Cluster" vertex="1">
+          <mxGeometry height="110" width="340" x="100" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-8" parent="WIukMI8lCswDVTCZhfXU-7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4caf50;fontStyle=1;" value="Leader Node" vertex="1">
+          <mxGeometry height="50" width="130" x="20" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-9" parent="WIukMI8lCswDVTCZhfXU-7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#4caf50;" value="Follower Nodes" vertex="1">
+          <mxGeometry height="50" width="130" x="190" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-10" edge="1" parent="WIukMI8lCswDVTCZhfXU-7" source="WIukMI8lCswDVTCZhfXU-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;strokeWidth=1.5;value=Sync;" target="WIukMI8lCswDVTCZhfXU-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe0b2;strokeColor=#ffb74d;fontStyle=1;" value="Connected Microservices" vertex="1">
+          <mxGeometry height="60" width="180" x="180" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-12" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;" target="WIukMI8lCswDVTCZhfXU-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-13" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" target="WIukMI8lCswDVTCZhfXU-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-14" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" target="WIukMI8lCswDVTCZhfXU-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-15" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" target="WIukMI8lCswDVTCZhfXU-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="270" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-16" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;" target="WIukMI8lCswDVTCZhfXU-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="WIukMI8lCswDVTCZhfXU-17" edge="1" parent="1" source="WIukMI8lCswDVTCZhfXU-7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;" target="WIukMI8lCswDVTCZhfXU-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
