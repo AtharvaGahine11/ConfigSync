@@ -1,4 +1,22 @@
-# ConfigSync – Distributed Configuration Management Service
+<div align="center">
+
+# ⚡ ConfigSync
+
+### Distributed Configuration Management Platform
+
+*Centralized Configuration • Leader Election • Replication • Consensus • Real-Time Synchronization*
+
+<img src="https://readme-typing-svg.herokuapp.com?font=Poppins&size=24&duration=3000&pause=1000&color=00D4FF&center=true&vCenter=true&width=1000&lines=Distributed+Configuration+Management+Platform;Leader+Election+and+Consensus+Simulation;Real-Time+Configuration+Propagation;Fault+Tolerance+and+Replication;Inspired+by+Apache+ZooKeeper+and+etcd"/>
+
+<br>
+
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)
+![Flask](https://img.shields.io/badge/Flask-Backend-black?style=for-the-badge&logo=flask)
+![SQLite](https://img.shields.io/badge/SQLite-Database-blue?style=for-the-badge&logo=sqlite)
+![Distributed Systems](https://img.shields.io/badge/Distributed-Systems-success?style=for-the-badge)
+![System Design](https://img.shields.io/badge/System-Design-orange?style=for-the-badge)
+
+</div>
 
 ConfigSync is a complete, lightweight, and self-contained **Distributed Configuration Management Service** built to demonstrate core System Design concepts. Inspired by production-grade consensus engines like **Apache ZooKeeper** and **etcd**, it features a fully functional REST API, SQLite storage, version control history, point-in-time rollback, and a Raft-like leader election and configuration propagation simulator.
 
@@ -46,15 +64,40 @@ In microservices architectures, managing application configurations (like databa
 
 ## 🏗️ System Architecture
 
-ConfigSync implements a modular system design:
 
-```
-[ Web Dashboard ] <---> [ Flask Backend ] <---> [ SQLite DB ]
-  (HTML/CSS/JS)           (REST & SSE)           (Shared State)
-                                ^
-                                |
-                  [ Service Nodes Simulator ]
-                    (Background Threads: A, B, C)
+```text
+ Admin Dashboard
+         │
+         ▼
+   Flask API Layer
+         │
+ ┌───────┼────────┐
+ ▼       ▼        ▼
+
+Config  Watcher  Monitor
+Store   Service  Engine
+
+         │
+         ▼
+
+SQLite Database
+
+         │
+         ▼
+
+Distributed Cluster
+
+ Leader Node
+      │
+ ┌────┼────┐
+ ▼    ▼    ▼
+
+Follower Nodes
+
+         │
+         ▼
+
+Connected Services
 ```
 
 - **Frontend**: A modern dark-mode user interface featuring glassmorphic stat cards, a terminal console displaying real-time events, and an interactive service manager.
@@ -314,5 +357,19 @@ Here is a step-by-step walkthrough to present this project during a viva or demo
 
 ---
 
+---
 
+<div align="center">
+
+### Built with ❤️ for System Design & Distributed Systems
+
+**Atharva P. Gahine**
+
+B.Tech Computer Science & Engineering
+
+ITM Skills University
+
+⭐ If you found this project useful, consider giving it a star.
+
+</div>
 
