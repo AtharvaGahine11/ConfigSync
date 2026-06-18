@@ -314,37 +314,5 @@ Here is a step-by-step walkthrough to present this project during a viva or demo
 
 ---
 
-## 📤 GitHub Upload Instructions
 
-If you need to push this project to GitHub, follow these standard git commands:
 
-### 1. Initialize Repository
-```bash
-git init
-```
-
-### 2. Add Git Ignore
-Create a `.gitignore` file to avoid pushing database files or temporary pycache folders:
-```bash
-echo "config.db" >> .gitignore
-echo "__pycache__/" >> .gitignore
-echo "*.pyc" >> .gitignore
-echo ".DS_Store" >> .gitignore
-echo "config.db-journal" >> .gitignore
-echo "config.db-wal" >> .gitignore
-echo "config.db-shm" >> .gitignore
-```
-
-### 3. Commit Code
-```bash
-git add .
-git commit -m "feat: initial commit for ConfigSync distributed configuration management service"
-```
-
-### 4. Create Remote Repository & Push
-Create an empty repository on GitHub, then link and push:
-```bash
-git branch -M main
-git remote add origin https://github.com/<your-username>/config-sync.git
-git push -u origin main
-```
