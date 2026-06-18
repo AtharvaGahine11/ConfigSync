@@ -291,36 +291,159 @@ Toggles a node between `ALIVE` and `DEAD` to simulate failures.
 
 ---
 
-## 🚀 Installation & Setup
+---
 
-### Prerequisites
-- Python 3.8+ installed.
-- Modern browser (Chrome, Edge, Firefox, or Safari).
+## 📖 Project Overview
 
-### 1. Clone & Navigate
-Create your project directory and enter it:
-```bash
-git clone <your-repository-url> config-sync
-cd config-sync
-```
+ConfigSync is a distributed configuration management platform designed to centralize, synchronize, and manage application configurations across distributed systems and microservices.
 
-### 2. Install Dependencies
-Install Flask from the requirements file:
+The platform demonstrates real-world distributed systems concepts including leader election, replication, quorum consensus, heartbeat monitoring, fault tolerance, configuration versioning, rollback mechanisms, and real-time synchronization.
+
+Inspired by enterprise-grade technologies such as **Apache ZooKeeper**, **etcd**, and **Consul**, ConfigSync provides a practical implementation of configuration management while serving as an educational demonstration of modern System Design principles.
+
+### 🎯 Objectives
+
+- Centralize configuration management
+- Eliminate configuration inconsistencies
+- Enable real-time configuration propagation
+- Simulate distributed consensus mechanisms
+- Provide version control and rollback capabilities
+- Demonstrate fault tolerance and recovery
+- Visualize distributed system operations through an interactive dashboard
+
+### 🌟 Project Highlights
+
+✅ Distributed Configuration Store
+
+✅ Leader Election Simulation
+
+✅ Quorum-Based Consensus
+
+✅ Configuration Replication
+
+✅ Real-Time Event Streaming (SSE)
+
+✅ Heartbeat Monitoring
+
+✅ Failure Detection
+
+✅ Point-in-Time Rollback
+
+✅ Version Control & Audit Logs
+
+✅ Interactive Service Crash & Recovery
+
+✅ Modern Monitoring Dashboard
+
+---
+
+## 📦 Dependencies
+
+### Software Requirements
+
+- Python 3.8 or Higher
+- Git
+- Modern Web Browser (Chrome, Edge, Firefox, Safari)
+
+### Python Libraries
+
+- Flask
+- SQLite3 (Built-in)
+- threading
+- queue
+- json
+- datetime
+- time
+- os
+
+### Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the Application
-Start the Flask application:
+### Sample requirements.txt
+
+```txt
+Flask==3.0.3
+```
+
+---
+
+## 🚀 Execution Steps
+
+### Step 1: Clone Repository
+
+```bash
+git clone https://github.com/<your-username>/ConfigSync.git
+
+cd ConfigSync
+```
+
+### Step 2: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Start Application
+
 ```bash
 python app.py
 ```
 
-### 4. View the Dashboard
-Open your web browser and navigate to:
+### Step 4: Open Dashboard
+
+Open your browser and navigate to:
+
+```text
+http://127.0.0.1:5000
 ```
-http://127.0.0.1:5000/
-```
+
+### Step 5: Explore Features
+
+- Create Configurations
+- Update Existing Configurations
+- Delete Configurations
+- Simulate Node Failures
+- Trigger Leader Re-Election
+- Observe Replication Logs
+- Perform Point-in-Time Rollback
+- Monitor Cluster Health
+
+---
+
+## 📋 Additional Project Details
+
+### Distributed System Concepts Implemented
+
+| Concept | Description |
+|----------|-------------|
+| Leader Election | Automatic leader selection among nodes |
+| Heartbeats | Node health monitoring |
+| Replication | Configuration synchronization |
+| Consensus | Majority quorum validation |
+| Fault Tolerance | Recovery from node failures |
+| Rollback | Point-in-time state restoration |
+| Event Streaming | Real-time notifications using SSE |
+| Monitoring | Cluster observability and health tracking |
+
+### Academic Relevance
+
+This project was developed as part of a System Design case study and demonstrates practical implementation of:
+
+- Distributed Systems
+- Configuration Management
+- Consensus Algorithms
+- Replication Strategies
+- Fault Tolerance
+- High Availability
+- Real-Time Synchronization
+- Event-Driven Architecture
+
+The project serves as a simplified educational implementation of concepts commonly found in production systems such as Apache ZooKeeper, etcd, and Consul.
+
+---
 
 ---
 
