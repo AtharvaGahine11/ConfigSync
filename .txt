@@ -1,0 +1,411 @@
+Why centralize configuration management?	
+-->Simplifies updates and maintains consistency across services.
+
+How would services receive configuration updates?	
+-->Push notifications or polling mechanisms.
+
+What happens if the configuration server becomes unavailable?	
+-->Local cached configurations continue operation.
+
+How would you version configurations?	
+-->Configuration snapshots and change history.
+
+Why is consistency important?	
+-->Prevents services from operating with conflicting configurations.
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+What is Client-Server Architecture?
+--> A model where clients send requests and servers process and respond.
+
+Advantages of Client-Server Architecture?
+--> Centralized management, security, scalability, and maintainability.
+
+What happens when you type a URL?
+--> DNS lookup → TCP connection → HTTP request → Server response → Browser renders page.
+
+What is DNS?
+--> Domain Name System converts domain names into IP addresses.
+
+What is Latency?
+--> Time taken for data to travel from source to destination.
+
+What is Throughput?
+--> Amount of data processed per unit time.
+
+What is Vertical Scaling?
+--> Increasing CPU, RAM, or storage of a single server.
+
+When choose Vertical Scaling?
+--> Suitable for small applications with moderate traffic.
+
+What is Horizontal Scaling?
+--> Adding more servers instead of upgrading a single server.
+
+Advantages of Horizontal Scaling?
+--> Better scalability, fault tolerance, and availability.
+
+What is a Load Balancer?
+--> Distributes incoming requests across multiple servers.
+
+Round Robin Load Balancing?
+--> Requests are distributed sequentially among available servers.
+
+What is Caching?
+--> Storing frequently accessed data in fast storage for quicker access.
+
+What is Cache Invalidation?
+--> Process of updating or removing outdated cache data.
+
+SQL vs NoSQL?
+--> SQL uses structured tables; NoSQL uses flexible schemas.
+
+Why SQL?
+--> Strong consistency and ACID compliance.
+
+Why NoSQL?
+--> Better scalability and flexible data models.
+
+What are ACID Properties?
+--> Atomicity, Consistency, Isolation, and Durability.
+
+What is Database Replication?
+--> Copying data from one database to multiple replicas.
+
+Benefits of Replication?
+--> High availability, backup, and fault tolerance.
+
+What is Sharding?
+--> Splitting data across multiple databases.
+
+Hash-Based Sharding?
+--> Uses a hash function to distribute data across shards.
+
+What is CAP Theorem?
+--> A distributed system can guarantee only two of Consistency, Availability, and Partition Tolerance.
+
+What is Consistency?
+--> All nodes see the same data at the same time.
+
+What is Synchronous Communication?
+--> Sender waits for a response before continuing.
+
+What is Asynchronous Communication?
+--> Sender continues without waiting for a response.
+
+Benefits of Async Communication?
+--> Better scalability and performance.
+
+What is Fault Tolerance?
+--> Ability of a system to continue operating despite failures.
+
+What is Redundancy?
+--> Having backup resources to prevent failures.
+
+What is a Queue System?
+--> Stores messages until consumers process them.
+
+What is a Dead Letter Queue?
+--> Stores messages that cannot be processed successfully.
+
+What is Publish-Subscribe Architecture?
+--> Publishers send messages to topics; subscribers receive them.
+
+Advantages of Pub/Sub?
+--> Decoupling, scalability, and asynchronous communication.
+
+What is a Generator in Python?
+--> A function that yields values one at a time.
+
+Why Generators?
+--> Memory efficient because they don't store all values at once.
+
+What is a Decorator?
+--> A function that modifies another function's behavior.
+
+What is REST API?
+--> An architectural style using HTTP for communication.
+
+Why REST?
+--> Simple, scalable, stateless, and widely supported.
+
+GET
+--> Retrieve data.
+
+POST
+--> Create data.
+
+PUT
+--> Update or replace data.
+
+DELETE
+--> Remove data.
+
+What is an API Endpoint?
+--> A specific URL used to access an API resource.
+
+What makes a Good API Design?
+--> Consistent naming, versioning, and proper error handling.
+
+Monolith vs Microservices?
+--> Monolith is a single application; Microservices are independent services.
+
+Advantages of Monolith?
+--> Simpler development and deployment.
+
+Advantages of Microservices?
+--> Independent scaling and deployment.
+
+What is Layered Architecture?
+--> System divided into presentation, business, and data layers.
+
+What is Event-Driven Architecture?
+--> Components communicate through events.
+
+How do Microservices Communicate?
+--> REST APIs, gRPC, or message brokers.
+
+What is Service Discovery?
+--> Mechanism to locate services dynamically.
+
+What is Authentication?
+--> Verifying user identity.
+
+What is Authorization?
+--> Determining what a user can access.
+
+What is JWT?
+--> JSON Web Token used for secure authentication.
+
+Common Authentication Methods?
+--> Passwords, OAuth, JWT, and MFA.
+
+What is HTTPS?
+--> Secure version of HTTP using SSL/TLS encryption.
+
+What is a Digital Certificate?
+--> A document that verifies a website's identity.
+
+What is Logging?
+--> Recording system events for monitoring and debugging.
+
+Why Logs?
+--> Troubleshooting, auditing, and monitoring.
+
+What are System Metrics?
+--> Quantitative measurements of system performance.
+
+Logs vs Metrics?
+--> Logs are detailed events; metrics are numerical measurements.
+
+Why centralize configuration management?
+--> Simplifies updates and maintains consistency across services.
+
+How would services receive configuration updates?
+--> Push notifications or polling mechanisms.
+
+What happens if the configuration server becomes unavailable?
+--> Local cached configurations continue operation.
+
+How would you version configurations?
+--> Configuration snapshots and change history.
+
+Why is consistency important?
+--> Prevents services from operating with conflicting configurations.
+
+What is Leader Election?
+--> Process of selecting one node as leader to coordinate operations.
+
+Why is Leader Election needed?
+--> Prevents conflicts and ensures a single source of truth.
+
+What is Replication?
+--> Copying data from leader node to follower nodes.
+
+Why is Replication important?
+--> Ensures fault tolerance and high availability.
+
+What are Heartbeats?
+--> Periodic signals used to verify that nodes are alive.
+
+Why are Heartbeats important?
+--> Help detect failures and trigger recovery mechanisms.
+
+What is Rollback?
+--> Restoring a previous configuration version.
+
+Why is Rollback important?
+--> Allows quick recovery from incorrect updates or failures.
+
+What is Quorum?
+--> Minimum majority of nodes required to approve an operation.
+
+Why is Quorum important?
+--> Ensures consistency and prevents split-brain scenarios.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Simple Explanation (30 Seconds)
+
+ConfigSync solves the problem of managing application configurations across multiple services in a distributed system.
+Instead of manually updating configuration files on every service, ConfigSync provides a centralized platform where configurations are
+stored, versioned, synchronized, and automatically propagated to all connected services.
+The system also demonstrates distributed systems concepts such as leader election, replication, heartbeat monitoring, fault tolerance,
+ and rollback mechanisms.
+
+What Is The Actual Problem?
+
+Imagine a company has:
+
+Service A
+Service B
+Service C
+Service D
+
+All these services use:
+
+DATABASE_URL
+API_KEY
+JWT_SECRET
+FEATURE_FLAGS
+
+Suppose the database URL changes.
+
+Without ConfigSync:
+
+Admin manually updates Service A
+Admin manually updates Service B
+Admin forgets Service C
+Admin updates Service D later
+
+Result:
+
+Service A → New Database
+Service B → New Database
+Service C → Old Database ❌
+Service D → New Database
+
+This is called:
+
+Configuration Drift
+
+Different services have different configurations.
+
+This can cause:
+
+System failures
+Downtime
+Security issues
+Data inconsistency
+What Solution Did You Build?
+
+Instead of updating every service individually:
+
+Admin
+  │
+  ▼
+ConfigSync
+  │
+  ├── Service A
+  ├── Service B
+  ├── Service C
+  └── Service D
+
+Now Admin updates only once:
+
+DATABASE_URL = new_value
+
+ConfigSync automatically:
+
+Stores the change
+Creates a new version
+Replicates it
+Synchronizes all services
+
+Every service receives the update.
+
+No manual work.
+
+Why Is Leader Election Needed?
+
+Professor may ask this.
+
+Suppose there are multiple nodes:
+
+Node A
+Node B
+Node C
+
+If all nodes try to update data simultaneously:
+
+Conflict
+
+To avoid this:
+
+One node becomes:
+
+LEADER
+
+Others become:
+
+FOLLOWERS
+
+Only the leader can accept writes.
+
+This ensures consistency.
+
+Why Replication?
+
+Suppose leader crashes.
+
+Without replication:
+
+Data Lost
+
+With replication:
+
+Leader
+   ↓
+Follower 1
+Follower 2
+
+Copies exist everywhere.
+
+If leader dies:
+
+Follower becomes new Leader
+
+System continues running.
+
+Why Heartbeats?
+
+Every node sends:
+
+"I'm alive"
+
+every few seconds.
+
+Example:
+
+Leader → Heartbeat
+Leader → Heartbeat
+Leader → Heartbeat
+
+If heartbeat stops:
+
+Leader Failed
+
+System automatically starts a new election.
+
+Why Rollback?
+
+Suppose Admin accidentally updates:
+
+DATABASE_URL = wrong_value
+
+Application crashes.
+
+Instead of manually fixing:
+
+Rollback to Version 3
+
+System restores previous working configuration.

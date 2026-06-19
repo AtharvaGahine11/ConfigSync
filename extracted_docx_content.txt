@@ -1,0 +1,503 @@
+ConfigSync
+
+Distributed Configuration Management Service
+
+Project Documentation
+
+System Design Case Study
+
+  Flask  •  SQLite  •  Python  •  SSE
+
+Leader Election  •  Replication  •  Consensus
+
+Version Control  •  Rollback  •  Heartbeat Monitoring
+
+1. Problem Statement
+
+Modern organizations rely on distributed systems and microservice-based architectures where multiple services require access to shared configuration data such as database connection strings, API keys, feature flags, authentication tokens, and service endpoints.
+
+Managing these configurations manually across multiple services introduces several challenges:
+
+Configuration inconsistencies between services
+
+Delayed propagation of updates
+
+Service downtime during configuration changes
+
+Lack of version control and audit history
+
+Difficulty in rolling back incorrect configurations
+
+Single points of failure in centralized systems
+
+The objective of ConfigSync is to design and implement a distributed configuration management platform that provides centralized configuration storage, real-time synchronization, version control, fault tolerance, and configuration rollback capabilities while demonstrating key distributed system concepts such as leader election, replication, heartbeat monitoring, and consensus management.
+
+2. Proposed Solution
+
+ConfigSync provides a centralized platform for storing and managing configuration data across distributed services.
+
+The proposed solution consists of:
+
+A Flask-based backend application
+
+SQLite-based configuration storage
+
+Real-time synchronization using Server-Sent Events (SSE)
+
+Distributed node cluster simulation
+
+Leader election mechanism
+
+Configuration replication
+
+Heartbeat monitoring
+
+Configuration versioning
+
+Point-in-time rollback support
+
+Interactive monitoring dashboard
+
+Whenever an administrator creates or updates a configuration, the leader node coordinates replication across follower nodes. Once a quorum is achieved, the update is committed and propagated to all connected services.
+
+This architecture ensures consistency, fault tolerance, and high availability while allowing services to receive updates without requiring restarts.
+
+3. System Architecture
+
+Architecture Flow
+
+Administrator submits configuration updates.
+
+Flask API validates requests.
+
+Configuration Store saves data.
+
+Leader Node initiates replication.
+
+Followers synchronize configurations.
+
+Watch Service broadcasts events.
+
+Connected services receive updates.
+
+Monitoring Engine tracks cluster health.
+
+High-Level Architecture
+
+  Admin Dashboard
+
+       |
+
+       v
+
+  Flask API Layer
+
+       |
+
+  +----+----+----------+
+
+  v         v          v
+
+Config    Watcher   Monitoring
+
+Store     Service    Engine
+
+       |
+
+       v
+
+  SQLite Database
+
+       |
+
+       v
+
+  Distributed Node Cluster
+
+       Leader Node
+
+           |
+
+    +-------+-------+
+
+    v       v       v
+
+ Follower Follower Follower
+
+       |
+
+       v
+
+  Connected Microservices
+
+4. Module Description
+
+Admin Dashboard
+
+Provides a graphical interface for managing configurations and monitoring cluster status.
+
+Responsibilities
+
+Create configurations
+
+Update configurations
+
+Delete configurations
+
+Rollback revisions
+
+Monitor distributed nodes
+
+Flask API Layer
+
+Acts as the communication layer between users and the distributed system.
+
+Responsibilities
+
+Request handling
+
+Input validation
+
+API routing
+
+Event triggering
+
+Configuration Store
+
+Stores active configuration records.
+
+Responsibilities
+
+Create configurations
+
+Update configurations
+
+Delete configurations
+
+Version tracking
+
+Watcher Service
+
+Provides real-time notifications.
+
+Responsibilities
+
+Event streaming
+
+Change detection
+
+Configuration propagation
+
+Distributed Node Cluster
+
+Simulates a distributed environment.
+
+Components
+
+Leader Node
+
+Follower Nodes
+
+Candidate Nodes
+
+Responsibilities
+
+Leader election
+
+Replication
+
+Consensus management
+
+Monitoring Engine
+
+Tracks cluster health.
+
+Responsibilities
+
+Heartbeat monitoring
+
+Failure detection
+
+Status visualization
+
+5. Database Design
+
+The system uses SQLite to store configurations, version history, and service information.
+
+Table: configurations
+
+Field
+
+Type
+
+Description
+
+id
+
+INTEGER
+
+Primary Key
+
+key
+
+TEXT
+
+Configuration Key
+
+value
+
+TEXT
+
+Configuration Value
+
+description
+
+TEXT
+
+Description
+
+version
+
+INTEGER
+
+Version Number
+
+updated_at
+
+DATETIME
+
+Last Updated
+
+Table: config_history
+
+Field
+
+Type
+
+Description
+
+id
+
+INTEGER
+
+Primary Key
+
+config_id
+
+INTEGER
+
+Configuration Reference
+
+action
+
+TEXT
+
+CREATE / UPDATE / DELETE / ROLLBACK
+
+version
+
+INTEGER
+
+Revision
+
+timestamp
+
+DATETIME
+
+Change Time
+
+Table: services
+
+Field
+
+Type
+
+Description
+
+node_id
+
+TEXT
+
+Service Identifier
+
+role
+
+TEXT
+
+Leader / Follower
+
+status
+
+TEXT
+
+Alive / Dead
+
+heartbeat
+
+INTEGER
+
+Last Heartbeat
+
+current_version
+
+INTEGER
+
+Synced Revision
+
+6. Technology Stack
+
+Category
+
+Technologies
+
+Frontend
+
+HTML5, CSS3, JavaScript
+
+Backend
+
+Python, Flask
+
+Database
+
+SQLite
+
+Distributed Concepts
+
+Leader Election, Replication, Consensus, Heartbeat Monitoring, Fault Tolerance, Event Streaming, Version Control
+
+Tools
+
+VS Code, Git, GitHub, Draw.io
+
+7. Implementation Details
+
+Configuration Management
+
+The administrator creates configurations using the dashboard. Example request payload:
+
+{
+
+  "key":   "database_url",
+
+  "value": "postgresql://localhost:5432/app"
+
+}
+
+The configuration is stored in the database and assigned a version number.
+
+Leader Election
+
+The system simulates a Raft-like consensus mechanism with three node states:
+
+LEADER — coordinates all writes and replication
+
+FOLLOWER — replicates from leader; monitors heartbeat
+
+CANDIDATE — initiates election when leader heartbeat is lost
+
+If the leader fails, followers detect the missing heartbeat, transition to CANDIDATE state, and hold a new election to select a replacement leader.
+
+Replication
+
+When a configuration is updated:
+
+Leader receives update.
+
+Database stores revision.
+
+Followers replicate change.
+
+Quorum validates commit.
+
+Update becomes globally available.
+
+Heartbeat Monitoring
+
+Each node periodically updates its heartbeat information. Benefits include:
+
+Failure detection
+
+Cluster health monitoring
+
+Automatic recovery
+
+Rollback
+
+Rollback restores the system to a previous revision. Benefits:
+
+Disaster recovery
+
+Error correction
+
+Audit support
+
+Watch Service
+
+Implemented using Server-Sent Events (SSE). Benefits:
+
+Real-time updates
+
+Low latency synchronization
+
+Event-driven architecture
+
+8. Screenshots
+
+Screenshot 1 – Dashboard Overview
+
+The main dashboard displays real-time cluster status including total configurations, connected services, current consensus term (Raft election term), active leader node, and global revision number. The header prominently shows the consensus state (Healthy – Quorum Active), the active leader (Service C), and the current global revision.
+
+Figure 1: ConfigSync Dashboard – Service Control Center & Live Distributed Sync Logs
+
+Key metrics visible in the dashboard:
+
+Total Configurations
+
+3 active configuration entries stored
+
+Connected Services
+
+3/3 – all nodes online
+
+Current Consensus Term
+
+2 – current Raft election term
+
+Database Logs Commit
+
+3 – global revision committed
+
+The Service Control Center panel (left) shows all three nodes – Service A and Service B as FOLLOWERS and Service C as the LEADER – each running on version v3, Term 2. The Live Distributed Sync Logs panel (right) shows real-time replication events including the creation of the database_url configuration and its subsequent replication to follower nodes.
+
+9. Future Scope
+
+The current implementation demonstrates core distributed system concepts. Future enhancements may include:
+
+Full Raft Consensus Implementation
+
+Multi-Region Replication
+
+Docker Deployment
+
+Kubernetes Integration
+
+Role-Based Access Control (RBAC)
+
+JWT Authentication
+
+Prometheus Monitoring
+
+Grafana Dashboards
+
+Cloud Deployment on AWS / Azure / GCP
+
+Distributed Cache Integration
+
+High Availability Clusters
+
+10. Conclusion
+
+ConfigSync successfully demonstrates the design and implementation of a distributed configuration management service. The system provides centralized configuration storage, real-time synchronization, leader election, replication, fault tolerance, version control, and rollback capabilities.
+
+The project effectively applies distributed systems concepts inspired by Apache ZooKeeper and etcd while providing a practical and interactive platform for understanding modern configuration management architectures. This implementation fulfills the requirements of the System Design case study and serves as a scalable foundation for future enhancements.
